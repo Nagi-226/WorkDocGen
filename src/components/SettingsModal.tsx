@@ -4,72 +4,61 @@ import { useSettings } from "../hooks/useSettings";
 import type { LlmProvider, ProviderPreset } from "../types";
 
 export default function SettingsModal() {
-  const { settingsOpen, setSettingsOpen } = useAppStore();
+  const {
+    settingsOpen,
+    setSettingsOpen,
+    providers,
+    updateProvider,
+    addProvider,
+  } = useAppStore();
   const { loadProviderPresets, saveProvider, testConnection } = useSettings();
   const [presets, setPresets] = useState<ProviderPreset[]>([]);
-  const [providers, setProviders] = useState<LlmProvider[]>([]);
   const [testing, setTesting] = useState<string | null>(null);
   const [testResults, setTestResults] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (settingsOpen) {
       loadProviderPresets().then(setPresets);
-      // 从localStorage恢复
-      const saved = localStorage.getItem("wdg_providers");
-      if (saved) setProviders(JSON.parse(saved));
     }
   }, [settingsOpen]);
 
   if (!settingsOpen) return null;
 
   const handlePresetSelect = (preset: ProviderPreset, index: number) => {
-    setProviders((prev) => {
-      const updated = [...prev];
-      updated[index] = {
-        id: preset.id,
-        name: preset.name,
-        base_url: preset.base_url,
-        api_key: updated[index]?.api_key || "",
-        model: preset.default_model,
-        max_tokens: 4096,
-        temperature: 0.7,
-        enabled: updated[index]?.enabled || false,
-      };
-      localStorage.setItem("wdg_providers", JSON.stringify(updated));
-      return updated;
+    const existing = providers[index];
+    updateProvider(index, {
+      id: preset.id,
+      name: preset.name,
+      base_url: preset.base_url,
+      api_key: existing?.api_key || "",
+      model: preset.default_model,
+      max_tokens: existing?.max_tokens || 4096,
+      temperature: existing?.temperature ?? 0.7,
+      enabled: existing?.enabled || false,
     });
   };
 
   const handleAddProvider = () => {
     if (presets.length > providers.length) {
       const preset = presets[providers.length];
-      setProviders((prev) => {
-        const updated = [
-          ...prev,
-          {
-            id: preset.id,
-            name: preset.name,
-            base_url: preset.base_url,
-            api_key: "",
-            model: preset.default_model,
-            max_tokens: 4096,
-            temperature: 0.7,
-            enabled: false,
-          },
-        ];
-        localStorage.setItem("wdg_providers", JSON.stringify(updated));
-        return updated;
+      addProvider({
+        id: preset.id,
+        name: preset.name,
+        base_url: preset.base_url,
+        api_key: "",
+        model: preset.default_model,
+        max_tokens: 4096,
+        temperature: 0.7,
+        enabled: false,
       });
     }
   };
 
   const handleUpdate = (index: number, field: keyof LlmProvider, value: any) => {
-    setProviders((prev) => {
-      const updated = [...prev];
-      updated[index] = { ...updated[index], [field]: value };
-      localStorage.setItem("wdg_providers", JSON.stringify(updated));
-      return updated;
-    });
+    const current = providers[index];
+    if (current) {
+      updateProvider(index, { ...current, [field]: value });
+    }
   };
 
   const handleSave = async () => {
@@ -83,7 +72,7 @@ export default function SettingsModal() {
 
   const handleTest = async (index: number) => {
     const p = providers[index];
-    if (!p.api_key) return;
+    if (!p?.api_key) return;
     setTesting(p.id);
     const result = await testConnection(p);
     setTestResults((prev) => ({ ...prev, [p.id]: result.ok ? "连接成功" : result.msg }));

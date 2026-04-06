@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import type { Template, LlmProvider, GenerationRecord } from "../types";
 
 interface AppState {
@@ -41,34 +42,54 @@ interface AppState {
   setHistoryOpen: (v: boolean) => void;
 }
 
-export const useAppStore = create<AppState>((set) => ({
-  sidebarOpen: true,
-  toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
+export const useAppStore = create<AppState>()(
+  persist(
+    (set) => ({
+      sidebarOpen: true,
+      toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
 
-  currentTemplate: null,
-  setCurrentTemplate: (t) => set({ currentTemplate: t }),
+      currentTemplate: null,
+      setCurrentTemplate: (t) => set({ currentTemplate: t }),
 
-  templates: [],
-  setTemplates: (t) => set({ templates: t }),
+      templates: [],
+      setTemplates: (t) => set({ templates: t }),
 
-  providers: [],
-  setProviders: (p) => set({ providers: p }),
-  activeProviderId: null,
-  setActiveProviderId: (id) => set({ activeProviderId: id }),
+      providers: [],
+      setProviders: (p) => set({ providers: p }),
+      updateProvider: (index: number, provider: LlmProvider) =>
+        set((s) => {
+          const updated = [...s.providers];
+          updated[index] = provider;
+          return { providers: updated };
+        }),
+      addProvider: (provider: LlmProvider) =>
+        set((s) => ({ providers: [...s.providers, provider] })),
+      activeProviderId: null,
+      setActiveProviderId: (id) => set({ activeProviderId: id }),
 
-  isGenerating: false,
-  setIsGenerating: (v) => set({ isGenerating: v }),
-  outputText: "",
-  setOutputText: (t) => set({ outputText: t }),
-  appendOutputText: (t) =>
-    set((s) => ({ outputText: s.outputText + t })),
-  clearOutputText: () => set({ outputText: "" }),
+      isGenerating: false,
+      setIsGenerating: (v) => set({ isGenerating: v }),
+      outputText: "",
+      setOutputText: (t) => set({ outputText: t }),
+      appendOutputText: (t) =>
+        set((s) => ({ outputText: s.outputText + t })),
+      clearOutputText: () => set({ outputText: "" }),
 
-  history: [],
-  setHistory: (h) => set({ history: h }),
+      history: [],
+      setHistory: (h) => set({ history: h }),
 
-  settingsOpen: false,
-  setSettingsOpen: (v) => set({ settingsOpen: v }),
-  historyOpen: false,
-  setHistoryOpen: (v) => set({ historyOpen: v }),
-}));
+      settingsOpen: false,
+      setSettingsOpen: (v) => set({ settingsOpen: v }),
+      historyOpen: false,
+      setHistoryOpen: (v) => set({ historyOpen: v }),
+    }),
+    {
+      name: "workdocgen-store",
+      partialize: (state) => ({
+        providers: state.providers,
+        activeProviderId: state.activeProviderId,
+      }),
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
