@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useAppStore } from "../stores/appStore";
 import { useGenerate } from "../hooks/useGenerate";
 import type { Template, TemplateVariable } from "../types";
+import VariableInput from "./VariableInput";
 
 export default function Editor() {
-  const { currentTemplate, isGenerating, clearOutputText, setHistoryOpen } =
+  const { currentTemplate, isGenerating, setHistoryOpen } =
     useAppStore();
   const { generate } = useGenerate();
   const [values, setValues] = useState<Record<string, string>>({});
@@ -15,7 +16,6 @@ export default function Editor() {
 
   const handleGenerate = async () => {
     if (!currentTemplate) return;
-    clearOutputText();
 
     // 填充默认值
     const mergedVars: Record<string, string> = {};
@@ -98,43 +98,11 @@ export default function Editor() {
                 {v.label}
                 {v.required && <span className="text-red-400 ml-1">*</span>}
               </label>
-              {v.type === "textarea" ? (
-                <textarea
-                  value={values[v.key] || ""}
-                  onChange={(e) => handleValueChange(v.key, e.target.value)}
-                  placeholder={v.placeholder}
-                  rows={4}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 resize-y transition-colors"
-                />
-              ) : v.type === "select" && v.options ? (
-                <select
-                  value={values[v.key] || v.default || ""}
-                  onChange={(e) => handleValueChange(v.key, e.target.value)}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
-                >
-                  {v.options.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
-              ) : v.type === "number" ? (
-                <input
-                  type="number"
-                  value={values[v.key] || ""}
-                  onChange={(e) => handleValueChange(v.key, e.target.value)}
-                  placeholder={v.placeholder}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
-                />
-              ) : (
-                <input
-                  type="text"
-                  value={values[v.key] || ""}
-                  onChange={(e) => handleValueChange(v.key, e.target.value)}
-                  placeholder={v.placeholder}
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
-                />
-              )}
+              <VariableInput
+                variable={v}
+                value={values[v.key] || ""}
+                onChange={handleValueChange}
+              />
             </div>
           ))}
         </div>

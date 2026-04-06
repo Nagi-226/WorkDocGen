@@ -13,14 +13,18 @@ export default function SettingsModal() {
   } = useAppStore();
   const { loadProviderPresets, saveProvider, testConnection } = useSettings();
   const [presets, setPresets] = useState<ProviderPreset[]>([]);
+  const [presetsLoaded, setPresetsLoaded] = useState(false);
   const [testing, setTesting] = useState<string | null>(null);
   const [testResults, setTestResults] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    if (settingsOpen) {
-      loadProviderPresets().then(setPresets);
+    if (settingsOpen && !presetsLoaded) {
+      loadProviderPresets().then((data) => {
+        setPresets(data);
+        setPresetsLoaded(true);
+      });
     }
-  }, [settingsOpen]);
+  }, [settingsOpen, presetsLoaded]);
 
   if (!settingsOpen) return null;
 
