@@ -1,0 +1,41 @@
+{
+  "id": "architecture",
+  "name": "项目架构生成",
+  "description": "根据项目描述生成系统架构设计文档",
+  "category": "doc",
+  "icon": "🏗️",
+  "variables": [
+    {
+      "key": "project_desc",
+      "label": "项目描述",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "项目的业务目标、功能范围、核心需求..."
+    },
+    {
+      "key": "tech_stack",
+      "label": "技术栈偏好",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "倾向使用的技术、框架、工具..."
+    },
+    {
+      "key": "scale",
+      "label": "规模预期",
+      "type": "select",
+      "required": false,
+      "placeholder": "",
+      "options": ["个人项目", "小团队(3-5人)", "中型团队(5-15人)", "大型项目(15+人)"],
+      "default": "小团队(3-5人)"
+    },
+    {
+      "key": "constraints",
+      "label": "特殊约束",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "性能要求、安全合规、部署环境等约束条件..."
+    }
+  ],
+  "system_prompt": "{{global:system_prompt}}\n\n你现在是系统架构师。你需要根据项目需求，输出一份专业的系统架构设计文档。\n\n输出要求：\n1. 使用Markdown格式\n2. 文档结构：项目概述 → 架构原则 → 系统架构图（文字描述）→ 模块划分 → 技术选型（含理由）→ 数据架构 → 接口设计 → 部署架构 → 演进路线\n3. 技术选型需说明对比理由（为什么选A不选B）\n4. 模块划分遵循高内聚低耦合原则\n5. 考虑可扩展性、可维护性、可靠性\n6. 数据架构需说明存储方案和数据流\n7. 给出分阶段的演进路线",
+  "user_prompt_template": "请根据以下信息设计系统架构：\n\n## 项目描述\n{{project_desc}}\n\n## 技术栈偏好\n{{tech_stack}}\n\n## 团队规模\n{{scale}}\n\n## 特殊约束\n{{constraints}}"
+}

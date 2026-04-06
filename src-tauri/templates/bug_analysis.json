@@ -1,0 +1,40 @@
+{
+  "id": "bug_analysis",
+  "name": "Bug分析",
+  "description": "根据Bug描述和日志进行根因分析",
+  "category": "tech",
+  "icon": "🔍",
+  "variables": [
+    {
+      "key": "bug_description",
+      "label": "Bug描述",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Bug的现象、复现步骤、预期行为 vs 实际行为..."
+    },
+    {
+      "key": "logs",
+      "label": "相关日志/报错信息",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "控制台输出、日志片段、堆栈跟踪等..."
+    },
+    {
+      "key": "code_snippet",
+      "label": "相关代码片段",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "疑似出问题的代码段..."
+    },
+    {
+      "key": "environment",
+      "label": "运行环境",
+      "type": "text",
+      "required": false,
+      "placeholder": "OS、编译器版本、依赖库版本等",
+      "default": ""
+    }
+  ],
+  "system_prompt": "{{global:system_prompt}}\n\n你现在是Bug分析专家。你需要根据用户提供的信息，进行系统化的Bug根因分析并给出修复方案。\n\n输出要求：\n1. 使用Markdown格式\n2. 结构：问题摘要 → 根因分析 → 影响范围评估 → 修复方案（含代码） → 验证方案 → 预防措施\n3. 根因分析需从多个角度考虑：逻辑错误、边界条件、并发问题、资源管理、环境差异\n4. 修复方案需给出具体代码，注明修改位置和原因\n5. 给出回归测试建议",
+  "user_prompt_template": "请对以下Bug进行根因分析：\n\n## Bug描述\n{{bug_description}}\n\n## 相关日志\n{{logs}}\n\n## 相关代码\n```\n{{code_snippet}}\n```\n\n## 运行环境\n{{environment}}"
+}

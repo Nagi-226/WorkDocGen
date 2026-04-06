@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+target/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tauri
+src-tauri/target/
+src-tauri/Cargo.lock
+
+# Env
+.env
+.env.local
+
+# Temporary files
+build_errors.txt
+dev_output.txt
+dev_stderr.txt
+dev_stdout.txt
+gen_icon.cjs
+app-icon.png
+
+# WorkBuddy internal
+.workbuddy/

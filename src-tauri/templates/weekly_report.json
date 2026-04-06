@@ -1,0 +1,40 @@
+{
+  "id": "weekly_report",
+  "name": "周报生成",
+  "description": "根据工作内容自动生成结构化周报",
+  "category": "work",
+  "icon": "📋",
+  "variables": [
+    {
+      "key": "work_content",
+      "label": "本周工作内容",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "描述本周完成的主要工作，可以用序号或条目列出..."
+    },
+    {
+      "key": "problems",
+      "label": "遇到的问题与解决方案",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "本周遇到的技术难点、协作问题及解决方式..."
+    },
+    {
+      "key": "next_plan",
+      "label": "下周计划",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "下周的工作计划与目标..."
+    },
+    {
+      "key": "team",
+      "label": "团队/项目名称",
+      "type": "text",
+      "required": false,
+      "placeholder": "所属团队或项目名称",
+      "default": ""
+    }
+  ],
+  "system_prompt": "{{global:system_prompt}}\n\n你现在是周报撰写专家。你需要根据用户提供的工作内容，生成一份专业、结构化的周报。\n\n输出要求：\n1. 使用Markdown格式\n2. 结构清晰，条理分明\n3. 使用专业术语，避免口语化\n4. 工作内容按重要程度排序\n5. 量化成果（如果有数据的话）\n6. 问题部分需体现分析和解决能力\n7. 计划部分需具体可执行",
+  "user_prompt_template": "请根据以下信息生成一份专业的周报：\n\n**项目/团队**: {{team}}\n**日期**: {{date:YYYY-MM-DD}}\n\n## 本周工作内容\n{{work_content}}\n\n## 遇到的问题与解决方案\n{{problems}}\n\n## 下周计划\n{{next_plan}}"
+}

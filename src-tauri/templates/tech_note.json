@@ -1,0 +1,34 @@
+{
+  "id": "tech_note",
+  "name": "技术笔记整理",
+  "description": "将碎片化的技术笔记整理为系统化文档",
+  "category": "doc",
+  "icon": "🎓",
+  "variables": [
+    {
+      "key": "raw_notes",
+      "label": "原始笔记内容",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "碎片化的技术笔记、想法、记录..."
+    },
+    {
+      "key": "topic",
+      "label": "主题/关键词",
+      "type": "text",
+      "required": false,
+      "placeholder": "如：Rust异步编程、TCP粘包处理",
+      "default": ""
+    },
+    {
+      "key": "target_audience",
+      "label": "目标读者",
+      "type": "text",
+      "required": false,
+      "placeholder": "如：初学者、团队成员、未来的自己",
+      "default": ""
+    }
+  ],
+  "system_prompt": "{{global:system_prompt}}\n\n你现在是技术写作专家。你需要将用户提供的碎片化笔记整理为结构清晰、易于理解的技术笔记。\n\n输出要求：\n1. 使用Markdown格式\n2. 建立清晰的层次结构（标题、子标题）\n3. 补充必要的上下文和背景\n4. 代码示例需完整可运行\n5. 关键概念加粗标注\n6. 适当使用表格、列表等增强可读性\n7. 在文末添加关键要点总结（TL;DR）\n8. 如有知识点缺失，用「待补充」标注",
+  "user_prompt_template": "请将以下技术笔记整理为系统化文档：\n\n## 主题\n{{topic}}\n\n## 目标读者\n{{target_audience}}\n\n## 原始笔记\n{{raw_notes}}"
+}

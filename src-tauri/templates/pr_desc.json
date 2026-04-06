@@ -1,0 +1,39 @@
+{
+  "id": "pr_desc",
+  "name": "PR描述生成",
+  "description": "根据变更内容生成结构化的Pull Request描述",
+  "category": "git",
+  "icon": "🔀",
+  "variables": [
+    {
+      "key": "pr_title",
+      "label": "PR标题（简要）",
+      "type": "text",
+      "required": true,
+      "placeholder": "如：feat: 新增用户认证模块"
+    },
+    {
+      "key": "changes_detail",
+      "label": "变更详情",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "详细描述本次PR包含的改动..."
+    },
+    {
+      "key": "test_plan",
+      "label": "测试方案",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "已做的测试、需要reviewer关注的测试点..."
+    },
+    {
+      "key": "breaking_changes",
+      "label": "Breaking Changes",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "不兼容的变更，迁移指南..."
+    }
+  ],
+  "system_prompt": "{{global:system_prompt}}\n\n你现在是Pull Request描述专家。你需要根据用户提供的变更信息，生成一份专业、结构化的PR描述。\n\n输出要求：\n1. 使用Markdown格式\n2. 结构：概述 → 变更内容（分类列表） → 测试说明 → Breaking Changes → Checklist\n3. 变更内容按类型分组（New/Changed/Fixed/Removed）\n4. 提供清晰的Review指引\n5. 生成适合GitHub/GitLab使用的格式",
+  "user_prompt_template": "请为以下PR生成描述：\n\n## PR标题\n{{pr_title}}\n\n## 变更详情\n{{changes_detail}}\n\n## 测试方案\n{{test_plan}}\n\n## Breaking Changes\n{{breaking_changes}}"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "resume",
+  "name": "简历生成",
+  "description": "根据个人信息生成专业开发者简历",
+  "category": "personal",
+  "icon": "👤",
+  "variables": [
+    {
+      "key": "basic_info",
+      "label": "基本信息",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "姓名、学历、工作年限、联系方式等..."
+    },
+    {
+      "key": "skills",
+      "label": "技术栈与技能",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "编程语言、框架、工具、领域专长等..."
+    },
+    {
+      "key": "experience",
+      "label": "工作经历/项目经验",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "公司、职位、时间、主要职责和成果..."
+    },
+    {
+      "key": "highlights",
+      "label": "核心亮点",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "最具代表性的成就、开源贡献、技术博客等..."
+    },
+    {
+      "key": "target",
+      "label": "目标岗位方向",
+      "type": "text",
+      "required": false,
+      "placeholder": "如：C++高级工程师、嵌入式架构师",
+      "default": ""
+    }
+  ],
+  "system_prompt": "{{global:system_prompt}}\n\n你现在是资深技术简历顾问。你需要根据用户提供的信息，生成一份专业、有竞争力的技术简历。\n\n输出要求：\n1. 使用Markdown格式\n2. 采用STAR法则描述经历（情境、任务、行动、结果）\n3. 技术描述精准，不堆砌关键词\n4. 量化成果，突出影响力\n5. 结构：基本信息 → 专业技能 → 工作经历 → 项目经验 → 教育背景\n6. 语言精练，每段控制在2-3行\n7. 突出与目标岗位匹配的技能和经验",
+  "user_prompt_template": "请根据以下信息生成一份专业的技术简历：\n\n## 基本信息\n{{basic_info}}\n\n## 技术栈与技能\n{{skills}}\n\n## 工作经历/项目经验\n{{experience}}\n\n## 核心亮点\n{{highlights}}\n\n## 目标岗位\n{{target}}"
+}

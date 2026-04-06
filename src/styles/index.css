@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color-scheme: dark;
+  color: #e4e4e7;
+  background-color: #18181b;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* Markdown预览样式 */
+.markdown-preview {
+  @apply text-zinc-300 leading-relaxed;
+}
+.markdown-preview h1 {
+  @apply text-2xl font-bold text-white mt-6 mb-3 border-b border-zinc-700 pb-2;
+}
+.markdown-preview h2 {
+  @apply text-xl font-semibold text-white mt-5 mb-2 border-b border-zinc-800 pb-1;
+}
+.markdown-preview h3 {
+  @apply text-lg font-semibold text-zinc-100 mt-4 mb-2;
+}
+.markdown-preview p {
+  @apply my-2;
+}
+.markdown-preview ul, .markdown-preview ol {
+  @apply ml-6 my-2;
+}
+.markdown-preview ul {
+  @apply list-disc;
+}
+.markdown-preview ol {
+  @apply list-decimal;
+}
+.markdown-preview li {
+  @apply my-1;
+}
+.markdown-preview code {
+  @apply bg-zinc-800 text-emerald-400 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+.markdown-preview pre {
+  @apply bg-zinc-900 border border-zinc-700 rounded-lg p-4 my-3 overflow-x-auto;
+}
+.markdown-preview pre code {
+  @apply bg-transparent px-0 py-0 text-zinc-300;
+}
+.markdown-preview blockquote {
+  @apply border-l-4 border-zinc-600 pl-4 text-zinc-400 italic my-3;
+}
+.markdown-preview table {
+  @apply w-full border-collapse my-3;
+}
+.markdown-preview th {
+  @apply bg-zinc-800 border border-zinc-700 px-3 py-2 text-left font-semibold text-white;
+}
+.markdown-preview td {
+  @apply border border-zinc-700 px-3 py-2;
+}
+.markdown-preview tr:hover td {
+  @apply bg-zinc-800/50;
+}
+.markdown-preview strong {
+  @apply text-white font-semibold;
+}
+.markdown-preview a {
+  @apply text-blue-400 hover:text-blue-300 underline;
+}
+.markdown-preview hr {
+  @apply border-zinc-700 my-4;
+}
+
+/* 输出区域光标闪烁 */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.generating-cursor::after {
+  content: "▌";
+  @apply text-emerald-400;
+  animation: blink 1s infinite;
+}

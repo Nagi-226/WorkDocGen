@@ -1,0 +1,46 @@
+{
+  "id": "tech_doc",
+  "name": "技术文档生成",
+  "description": "根据代码或模块描述生成技术设计文档",
+  "category": "tech",
+  "icon": "📖",
+  "variables": [
+    {
+      "key": "module_name",
+      "label": "模块/组件名称",
+      "type": "text",
+      "required": true,
+      "placeholder": "如：用户认证模块、消息队列服务..."
+    },
+    {
+      "key": "description",
+      "label": "功能描述",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "该模块/组件的功能和职责..."
+    },
+    {
+      "key": "tech_stack",
+      "label": "技术栈",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "使用的技术、框架、协议等..."
+    },
+    {
+      "key": "api_or_interface",
+      "label": "API/接口定义",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "关键接口、数据结构、协议格式等..."
+    },
+    {
+      "key": "constraints",
+      "label": "约束与设计考虑",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "性能要求、安全要求、兼容性约束等..."
+    }
+  ],
+  "system_prompt": "{{global:system_prompt}}\n\n你现在是技术文档编写专家。你需要根据用户提供的信息，生成一份专业的技术设计文档。\n\n输出要求：\n1. 使用Markdown格式\n2. 文档结构：概述 → 架构设计 → 接口定义 → 数据模型 → 详细设计 → 部署方案 → 风险与约束\n3. 包含必要的架构图说明（用文字描述，可后续替换为实际图表）\n4. 设计决策需说明理由（Trade-off分析）\n5. 接口定义需包含请求/响应格式、错误码\n6. 考虑边界条件和异常场景",
+  "user_prompt_template": "请根据以下信息生成技术设计文档：\n\n## 模块名称\n{{module_name}}\n\n## 功能描述\n{{description}}\n\n## 技术栈\n{{tech_stack}}\n\n## API/接口定义\n{{api_or_interface}}\n\n## 约束与设计考虑\n{{constraints}}"
+}
