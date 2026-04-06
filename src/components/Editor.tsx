@@ -4,7 +4,7 @@ import { useGenerate } from "../hooks/useGenerate";
 import type { Template, TemplateVariable } from "../types";
 
 export default function Editor() {
-  const { currentTemplate, isGenerating, setIsGenerating, clearOutputText, setHistoryOpen } =
+  const { currentTemplate, isGenerating, clearOutputText, setHistoryOpen } =
     useAppStore();
   const { generate } = useGenerate();
   const [values, setValues] = useState<Record<string, string>>({});
@@ -16,7 +16,6 @@ export default function Editor() {
   const handleGenerate = async () => {
     if (!currentTemplate) return;
     clearOutputText();
-    setIsGenerating(true);
 
     // 填充默认值
     const mergedVars: Record<string, string> = {};

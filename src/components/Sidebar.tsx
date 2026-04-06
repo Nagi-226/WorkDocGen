@@ -1,13 +1,5 @@
 import { useAppStore } from "../stores/appStore";
 
-const templateIcons: Record<string, string> = {
-  work: "📋",
-  personal: "👤",
-  tech: "🔧",
-  git: "📝",
-  doc: "📖",
-};
-
 export default function Sidebar() {
   const { templates, currentTemplate, setCurrentTemplate, sidebarOpen, toggleSidebar } =
     useAppStore();

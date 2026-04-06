@@ -8,10 +8,20 @@ export default function HistoryPanel() {
     useAppStore();
   const { loadHistory, deleteRecord } = useHistory();
   const [selected, setSelected] = useState<string | null>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (historyOpen) {
-      loadHistory(100, 0);
+    if (historyOpen && !loaded) {
+      loadHistory(100, 0).then(() => setLoaded(true));
+    }
+  }, [historyOpen, loaded]);
+
+  // 历史数据变化时（比如删除后），重置缓存让下次打开能刷新
+  useEffect(() => {
+    if (!historyOpen) {
+      // 延迟重置，避免关闭动画期间误触发
+      const timer = setTimeout(() => setLoaded(false), 300);
+      return () => clearTimeout(timer);
     }
   }, [historyOpen]);
 

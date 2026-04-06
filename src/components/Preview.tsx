@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { useAppStore } from "../stores/appStore";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 export default function Preview() {
   const { outputText, isGenerating, setOutputText } = useAppStore();
+  const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     if (!outputText) return;
     try {
       await navigator.clipboard.writeText(outputText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
     } catch {
       // Fallback
       const textarea = document.createElement("textarea");
@@ -17,6 +21,8 @@ export default function Preview() {
       textarea.select();
       document.execCommand("copy");
       document.body.removeChild(textarea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
     }
   };
 
@@ -33,9 +39,13 @@ export default function Preview() {
           <button
             onClick={handleCopy}
             disabled={!outputText}
-            className="px-2 py-1 text-xs text-zinc-400 hover:text-zinc-200 border border-zinc-700 rounded hover:bg-zinc-800 transition-colors disabled:opacity-30"
+            className={`px-2 py-1 text-xs border rounded transition-colors disabled:opacity-30 ${
+              copied
+                ? "text-emerald-400 border-emerald-500/50 bg-emerald-500/10"
+                : "text-zinc-400 hover:text-zinc-200 border-zinc-700 hover:bg-zinc-800"
+            }`}
           >
-            复制
+            {copied ? "已复制" : "复制"}
           </button>
           <button
             onClick={handleClear}
