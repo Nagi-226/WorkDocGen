@@ -22,9 +22,9 @@
 | Provider | 支持模型 |
 |----------|---------|
 | DeepSeek | deepseek-chat, deepseek-reasoner |
-| GLM (智谱) | glm-4-flash, glm-4-plus, glm-4-long |
-| Qwen (通义) | qwen-turbo, qwen-plus, qwen-max |
-| OpenAI | gpt-4o-mini, gpt-4o, gpt-4-turbo |
+| GLM (智谱) | glm-5.0, glm-5.0-Turbo |
+| Qwen (通义) | qwen-3.5, qwen-3.5-plus,qwen-3.6-plus |
+| OpenAI | gpt-5-mini, gpt-5.3-codex, gpt-5.4 |
 
 > 所有使用 OpenAI 兼容 API 格式的模型均可接入。
 
